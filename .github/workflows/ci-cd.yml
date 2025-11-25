@@ -20,7 +20,7 @@ jobs:
       - name: Build and Push Image
         run: |
           docker build -t ${{secrets.DOCKER_USERNAME}}/express-healthcheck:latest .
-          docker push ${{secrets.DOKCER_USERNAME}}/express-healthcheck:latest
+          docker push ${{secrets.DOCKER_USERNAME}}/express-healthcheck:latest
   
 
   deploy:
@@ -32,7 +32,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{secrets.SERVER_HOST}} >> ~/.ssh/khown_hosts
+          ssh-keyscan -H ${{secrets.SERVER_HOST}} >> ~/.ssh/known_hosts
 
       - name: Deploy to EC2
         run: |
@@ -52,14 +52,14 @@ jobs:
           fi
           
           echo "Deploying to: \$TARGET"
-          docker compost pull express-healthcheck-\$TARGET
+          docker compose pull express-healthcheck-\$TARGET
           docker compose up -d express-healthcheck-\$TARGET
           
-          if ["\$STOP" != "none" ]; then
+          if [ "\$STOP" != "none" ]; then
             echo "Running health check..."
             for i in {1..10}; do
               sleep 2
-              if docker exec express-healthcheck-\$TARGET curl -s http://localhost:3000/health' the
+              if docker exec express-healthcheck-\$TARGET curl -s http://localhost:3000/health'
             
                 echo "Health check passed"
                 break
@@ -81,7 +81,7 @@ jobs:
           docker rm -f nginx-proxy || true
           docker compose up -d nginx-proxy
           
-          if ["\$STOP" != "none" ]; then
+          if [ "\$STOP" != "none" ]; then
             docker stop \$STOP || true
           fi
           EOF
