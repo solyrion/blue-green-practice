@@ -19,8 +19,8 @@ jobs:
 
       - name: Build and Push Image
         run: |
-          docker build -t ${{secrets.DOCKER_USERNAME}}/express-haelthcheck:latest .
-          docker push ${{secrets.DOKCER_USERNAME}}/express-haelthcheck:latest
+          docker build -t ${{secrets.DOCKER_USERNAME}}/express-healthcheck:latest .
+          docker push ${{secrets.DOKCER_USERNAME}}/express-healthcheck:latest
   
 
   deploy:
