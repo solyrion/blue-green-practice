@@ -59,7 +59,7 @@ jobs:
             echo "Running health check..."
             for i in {1..10}; do
               sleep 2
-              if docker exec express-healthcheck-\$TARGET curl -s http://localhost:3000/health' then
+              if docker exec express-healthcheck-\$TARGET curl -s http://localhost:3000/health; then
                 echo "Health check passed"
                 break
               elif [ \$i -eq 10 ]; then
